@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" type = "text/css" media="screen" href="{% static 'styles/main.css' %}"></link>
+
+    <title>News Summary</title>
+</head>
+
+
+
+<body>
+    {% block content %}
+
+    {% endblock content %}
+    
+    <div class="footer-clean">
+        <footer>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-sm-4 col-md-3 item">
+                        <h3>Contact us</h3>
+                        <ul>
+                            <li><a href="http://sarasayed2823@gmail.com">AI - MCIT2</a></li>
+                            
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 item social">
+                        <h3>Find us here</h3>
+                        <a href="https://www.facebook.com/MCITEgypt/"><i class="icon ion-social-facebook"></i></a>
+                        <a href="https://twitter.com/MCIT_News"><i class="icon ion-social-twitter"></i></a>
+                        <a href="https://www.linkedin.com/company/ministry-of-communications-and-information-technology?trk=biz-companies-cym"><i class="icon ion-social-linkedin"></i></a>
+                        <a href="https://www.youtube.com/user/MCITEgypt?feature=mhum"><i class="icon ion-social-youtube"></i></a>
+                        <p class="copyright">MCIT © 2023</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+
+</html>

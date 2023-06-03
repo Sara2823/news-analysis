@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #222222;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#03DAC6", "font": {"color": "white"}, "id": "World Heritage Site", "label": "World Heritage Site", "shape": "dot", "title": "World Heritage Site"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "UNESCO", "label": "UNESCO", "shape": "dot", "title": "UNESCO"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "John F. Kennedy School of Government", "label": "John F. Kennedy School of Government", "shape": "dot", "title": "John F. Kennedy School of Government"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Harvard University", "label": "Harvard University", "shape": "dot", "title": "Harvard University"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "World War II", "label": "World War II", "shape": "dot", "title": "World War II"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Holocaust", "label": "Holocaust", "shape": "dot", "title": "Holocaust"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Cristiano Ronaldo", "label": "Cristiano Ronaldo", "shape": "dot", "title": "Cristiano Ronaldo"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Al Nassr", "label": "Al Nassr", "shape": "dot", "title": "Al Nassr"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Saudi Pro League", "label": "Saudi Pro League", "shape": "dot", "title": "Saudi Pro League"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Manchester United", "label": "Manchester United", "shape": "dot", "title": "Manchester United"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Al Shabab", "label": "Al Shabab", "shape": "dot", "title": "Al Shabab"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "CR7", "label": "CR7", "shape": "dot", "title": "CR7"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Saudi Arabia", "label": "Saudi Arabia", "shape": "dot", "title": "Saudi Arabia"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Al-Nassr", "label": "Al-Nassr", "shape": "dot", "title": "Al-Nassr"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Al-Ta\u0027ee", "label": "Al-Ta\u0027ee", "shape": "dot", "title": "Al-Ta\u0027ee"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Pele", "label": "Pele", "shape": "dot", "title": "Pele"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "New York Cosmos", "label": "New York Cosmos", "shape": "dot", "title": "New York Cosmos"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Zico", "label": "Zico", "shape": "dot", "title": "Zico"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Didier Drogba", "label": "Didier Drogba", "shape": "dot", "title": "Didier Drogba"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Shanghai Shenhua", "label": "Shanghai Shenhua", "shape": "dot", "title": "Shanghai Shenhua"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Chinese Super League", "label": "Chinese Super League", "shape": "dot", "title": "Chinese Super League"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Nicolas Anelka", "label": "Nicolas Anelka", "shape": "dot", "title": "Nicolas Anelka"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Zinedine Zidane", "label": "Zinedine Zidane", "shape": "dot", "title": "Zinedine Zidane"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "World Cup final of 2006", "label": "World Cup final of 2006", "shape": "dot", "title": "World Cup final of 2006"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "World Cup final", "label": "World Cup final", "shape": "dot", "title": "World Cup final"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Middle East", "label": "Middle East", "shape": "dot", "title": "Middle East"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Ronaldo thought he signed for Kaizer Chiefs", "label": "Ronaldo thought he signed for Kaizer Chiefs", "shape": "dot", "title": "Ronaldo thought he signed for Kaizer Chiefs"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Juventus", "label": "Juventus", "shape": "dot", "title": "Juventus"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Georgina Rodriguez", "label": "Georgina Rodriguez", "shape": "dot", "title": "Georgina Rodriguez"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Ronaldo", "label": "Ronaldo", "shape": "dot", "title": "Ronaldo"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Cody Gakpo", "label": "Cody Gakpo", "shape": "dot", "title": "Cody Gakpo"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "PSV Eindhoven", "label": "PSV Eindhoven", "shape": "dot", "title": "PSV Eindhoven"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Gustavo Scarpa", "label": "Gustavo Scarpa", "shape": "dot", "title": "Gustavo Scarpa"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Nottingham Forest", "label": "Nottingham Forest", "shape": "dot", "title": "Nottingham Forest"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Saudi Arabian league", "label": "Saudi Arabian league", "shape": "dot", "title": "Saudi Arabian league"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Al Nassr FC", "label": "Al Nassr FC", "shape": "dot", "title": "Al Nassr FC"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "football", "label": "football", "shape": "dot", "title": "football"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Riyadh", "label": "Riyadh", "shape": "dot", "title": "Riyadh"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Saudi Professional League", "label": "Saudi Professional League", "shape": "dot", "title": "Saudi Professional League"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "18", "label": "18", "shape": "dot", "title": "18"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "16", "label": "16", "shape": "dot", "title": "16"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "1976", "label": "1976", "shape": "dot", "title": "1976"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Luiz Gustavo", "label": "Luiz Gustavo", "shape": "dot", "title": "Luiz Gustavo"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "David Ospina", "label": "David Ospina", "shape": "dot", "title": "David Ospina"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Pity Martinez", "label": "Pity Martinez", "shape": "dot", "title": "Pity Martinez"}]);
+                  edges = new vis.DataSet([{"Value": "maintained by", "arrows": "to", "from": "World Heritage Site", "label": "maintained by", "title": "maintained by", "to": "UNESCO"}, {"Value": "part of", "arrows": "to", "from": "John F. Kennedy School of Government", "label": "part of", "title": "part of", "to": "Harvard University"}, {"Value": "has effect", "arrows": "to", "from": "World War II", "label": "has effect", "title": "has effect", "to": "Holocaust"}, {"Value": "member of sports team", "arrows": "to", "from": "Cristiano Ronaldo", "label": "member of sports team", "title": "member of sports team", "to": "Al Nassr"}, {"Value": "league", "arrows": "to", "from": "Al Nassr", "label": "league", "title": "league", "to": "Saudi Pro League"}, {"Value": "member of sports team", "arrows": "to", "from": "Cristiano Ronaldo", "label": "member of sports team", "title": "member of sports team", "to": "Manchester United"}, {"Value": "league", "arrows": "to", "from": "Al Shabab", "label": "league", "title": "league", "to": "Saudi Pro League"}, {"Value": "member of sports team", "arrows": "to", "from": "CR7", "label": "member of sports team", "title": "member of sports team", "to": "Al Nassr"}, {"Value": "country", "arrows": "to", "from": "Al Nassr", "label": "country", "title": "country", "to": "Saudi Arabia"}, {"Value": "league", "arrows": "to", "from": "Al-Nassr", "label": "league", "title": "league", "to": "Saudi Pro League"}, {"Value": "league", "arrows": "to", "from": "Al-Ta\u0027ee", "label": "league", "title": "league", "to": "Saudi Pro League"}, {"Value": "member of sports team", "arrows": "to", "from": "Cristiano Ronaldo", "label": "member of sports team", "title": "member of sports team", "to": "Al-Nassr"}, {"Value": "member of sports team", "arrows": "to", "from": "Pele", "label": "member of sports team", "title": "member of sports team", "to": "New York Cosmos"}, {"Value": "member of sports team", "arrows": "to", "from": "Zico", "label": "member of sports team", "title": "member of sports team", "to": "New York Cosmos"}, {"Value": "member of sports team", "arrows": "to", "from": "Didier Drogba", "label": "member of sports team", "title": "member of sports team", "to": "Shanghai Shenhua"}, {"Value": "league", "arrows": "to", "from": "Shanghai Shenhua", "label": "league", "title": "league", "to": "Chinese Super League"}, {"Value": "member of sports team", "arrows": "to", "from": "Nicolas Anelka", "label": "member of sports team", "title": "member of sports team", "to": "Shanghai Shenhua"}, {"Value": "participant in", "arrows": "to", "from": "Zinedine Zidane", "label": "participant in", "title": "participant in", "to": "World Cup final of 2006"}, {"Value": "winner", "arrows": "to", "from": "World Cup final of 2006", "label": "winner", "title": "winner", "to": "Zinedine Zidane"}, {"Value": "participant in", "arrows": "to", "from": "Zinedine Zidane", "label": "participant in", "title": "participant in", "to": "World Cup final"}, {"Value": "winner", "arrows": "to", "from": "World Cup final", "label": "winner", "title": "winner", "to": "Zinedine Zidane"}, {"Value": "part of", "arrows": "to", "from": "Saudi Arabia", "label": "part of", "title": "part of", "to": "Middle East"}, {"Value": "facet of", "arrows": "to", "from": "Ronaldo thought he signed for Kaizer Chiefs", "label": "facet of", "title": "facet of", "to": "Cristiano Ronaldo"}, {"Value": "member of sports team", "arrows": "to", "from": "Cristiano Ronaldo", "label": "member of sports team", "title": "member of sports team", "to": "Juventus"}, {"Value": "spouse", "arrows": "to", "from": "Cristiano Ronaldo", "label": "spouse", "title": "spouse", "to": "Georgina Rodriguez"}, {"Value": "spouse", "arrows": "to", "from": "Georgina Rodriguez", "label": "spouse", "title": "spouse", "to": "Cristiano Ronaldo"}, {"Value": "spouse", "arrows": "to", "from": "Ronaldo", "label": "spouse", "title": "spouse", "to": "Georgina Rodriguez"}, {"Value": "spouse", "arrows": "to", "from": "Georgina Rodriguez", "label": "spouse", "title": "spouse", "to": "Ronaldo"}, {"Value": "member of sports team", "arrows": "to", "from": "Cody Gakpo", "label": "member of sports team", "title": "member of sports team", "to": "PSV Eindhoven"}, {"Value": "member of sports team", "arrows": "to", "from": "Gustavo Scarpa", "label": "member of sports team", "title": "member of sports team", "to": "Nottingham Forest"}, {"Value": "league", "arrows": "to", "from": "Al Nassr", "label": "league", "title": "league", "to": "Saudi Arabian league"}, {"Value": "member of sports team", "arrows": "to", "from": "Ronaldo", "label": "member of sports team", "title": "member of sports team", "to": "Al Nassr"}, {"Value": "sport", "arrows": "to", "from": "Al Nassr FC", "label": "sport", "title": "sport", "to": "football"}, {"Value": "headquarters location", "arrows": "to", "from": "Al Nassr FC", "label": "headquarters location", "title": "headquarters location", "to": "Riyadh"}, {"Value": "league", "arrows": "to", "from": "Al Nassr FC", "label": "league", "title": "league", "to": "Saudi Professional League"}, {"Value": "sport", "arrows": "to", "from": "Cristiano Ronaldo", "label": "sport", "title": "sport", "to": "football"}, {"Value": "sport", "arrows": "to", "from": "Saudi Professional League", "label": "sport", "title": "sport", "to": "football"}, {"Value": "number of participants", "arrows": "to", "from": "Saudi Professional League", "label": "number of participants", "title": "number of participants", "to": "18"}, {"Value": "country", "arrows": "to", "from": "Al Nassr FC", "label": "country", "title": "country", "to": "Saudi Arabia"}, {"Value": "country", "arrows": "to", "from": "Saudi Professional League", "label": "country", "title": "country", "to": "Saudi Arabia"}, {"Value": "number of participants", "arrows": "to", "from": "Saudi Pro League", "label": "number of participants", "title": "number of participants", "to": "16"}, {"Value": "inception", "arrows": "to", "from": "Saudi Pro League", "label": "inception", "title": "inception", "to": "1976"}, {"Value": "member of sports team", "arrows": "to", "from": "Cristiano Ronaldo", "label": "member of sports team", "title": "member of sports team", "to": "Al Shabab"}, {"Value": "headquarters location", "arrows": "to", "from": "Al Nassr", "label": "headquarters location", "title": "headquarters location", "to": "Riyadh"}, {"Value": "country", "arrows": "to", "from": "Al Nassr", "label": "country", "title": "country", "to": "Riyadh"}, {"Value": "country", "arrows": "to", "from": "Riyadh", "label": "country", "title": "country", "to": "Saudi Arabia"}, {"Value": "member of sports team", "arrows": "to", "from": "Luiz Gustavo", "label": "member of sports team", "title": "member of sports team", "to": "Al Nassr"}, {"Value": "member of sports team", "arrows": "to", "from": "David Ospina", "label": "member of sports team", "title": "member of sports team", "to": "Al-Nassr"}, {"Value": "member of sports team", "arrows": "to", "from": "Pity Martinez", "label": "member of sports team", "title": "member of sports team", "to": "Al-Nassr"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 200,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+{% include 'base/details.html' %} </html>

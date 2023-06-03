@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #222222;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#03DAC6", "font": {"color": "white"}, "id": "Prince Harry", "label": "Prince Harry", "shape": "dot", "title": "Prince Harry"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Prince William", "label": "Prince William", "shape": "dot", "title": "Prince William"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "King Charles", "label": "King Charles", "shape": "dot", "title": "King Charles"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Queen Consort", "label": "Queen Consort", "shape": "dot", "title": "Queen Consort"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Princess Diana", "label": "Princess Diana", "shape": "dot", "title": "Princess Diana"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Kate", "label": "Kate", "shape": "dot", "title": "Kate"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "his family", "label": "his family", "shape": "dot", "title": "his family"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "his mother", "label": "his mother", "shape": "dot", "title": "his mother"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Spare", "label": "Spare", "shape": "dot", "title": "Spare"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "his wife", "label": "his wife", "shape": "dot", "title": "his wife"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Camilla, the Duchess of Cornwall", "label": "Camilla, the Duchess of Cornwall", "shape": "dot", "title": "Camilla, the Duchess of Cornwall"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "The Coronation", "label": "The Coronation", "shape": "dot", "title": "The Coronation"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Duke of Sussex", "label": "Duke of Sussex", "shape": "dot", "title": "Duke of Sussex"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Duchess of Sussex", "label": "Duchess of Sussex", "shape": "dot", "title": "Duchess of Sussex"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Meghan Markle", "label": "Meghan Markle", "shape": "dot", "title": "Meghan Markle"}]);
+                  edges = new vis.DataSet([{"Value": "sibling", "arrows": "to", "from": "Prince Harry", "label": "sibling", "title": "sibling", "to": "Prince William"}, {"Value": "sibling", "arrows": "to", "from": "Prince William", "label": "sibling", "title": "sibling", "to": "Prince Harry"}, {"Value": "father", "arrows": "to", "from": "Prince Harry", "label": "father", "title": "father", "to": "King Charles"}, {"Value": "child", "arrows": "to", "from": "King Charles", "label": "child", "title": "child", "to": "Prince Harry"}, {"Value": "spouse", "arrows": "to", "from": "Prince Harry", "label": "spouse", "title": "spouse", "to": "Queen Consort"}, {"Value": "spouse", "arrows": "to", "from": "Queen Consort", "label": "spouse", "title": "spouse", "to": "Prince Harry"}, {"Value": "mother", "arrows": "to", "from": "Prince Harry", "label": "mother", "title": "mother", "to": "Princess Diana"}, {"Value": "child", "arrows": "to", "from": "Princess Diana", "label": "child", "title": "child", "to": "Prince Harry"}, {"Value": "spouse", "arrows": "to", "from": "Prince William", "label": "spouse", "title": "spouse", "to": "Kate"}, {"Value": "spouse", "arrows": "to", "from": "Kate", "label": "spouse", "title": "spouse", "to": "Prince William"}, {"Value": "has part", "arrows": "to", "from": "his family", "label": "has part", "title": "has part", "to": "Prince Harry"}, {"Value": "child", "arrows": "to", "from": "his mother", "label": "child", "title": "child", "to": "Prince Harry"}, {"Value": "author", "arrows": "to", "from": "Spare", "label": "author", "title": "author", "to": "Prince Harry"}, {"Value": "spouse", "arrows": "to", "from": "Prince Harry", "label": "spouse", "title": "spouse", "to": "his wife"}, {"Value": "spouse", "arrows": "to", "from": "his wife", "label": "spouse", "title": "spouse", "to": "Prince Harry"}, {"Value": "main subject", "arrows": "to", "from": "Spare", "label": "main subject", "title": "main subject", "to": "Prince Harry"}, {"Value": "spouse", "arrows": "to", "from": "Prince William", "label": "spouse", "title": "spouse", "to": "Camilla, the Duchess of Cornwall"}, {"Value": "spouse", "arrows": "to", "from": "Camilla, the Duchess of Cornwall", "label": "spouse", "title": "spouse", "to": "Prince William"}, {"Value": "spouse", "arrows": "to", "from": "Camilla, the Duchess of Cornwall", "label": "spouse", "title": "spouse", "to": "Prince Harry"}, {"Value": "spouse", "arrows": "to", "from": "Prince Harry", "label": "spouse", "title": "spouse", "to": "Camilla, the Duchess of Cornwall"}, {"Value": "participant", "arrows": "to", "from": "The Coronation", "label": "participant", "title": "participant", "to": "Prince Harry"}, {"Value": "position held", "arrows": "to", "from": "Prince Harry", "label": "position held", "title": "position held", "to": "Duke of Sussex"}, {"Value": "officeholder", "arrows": "to", "from": "Duke of Sussex", "label": "officeholder", "title": "officeholder", "to": "Prince Harry"}, {"Value": "spouse", "arrows": "to", "from": "Prince Harry", "label": "spouse", "title": "spouse", "to": "Duchess of Sussex"}, {"Value": "spouse", "arrows": "to", "from": "Duchess of Sussex", "label": "spouse", "title": "spouse", "to": "Prince Harry"}, {"Value": "spouse", "arrows": "to", "from": "Prince William", "label": "spouse", "title": "spouse", "to": "Meghan Markle"}, {"Value": "spouse", "arrows": "to", "from": "Meghan Markle", "label": "spouse", "title": "spouse", "to": "Prince William"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 200,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

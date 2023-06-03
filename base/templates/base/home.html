@@ -1,0 +1,91 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class = "container" id="front">
+    <div class="row justify-content-center">
+        <div class="col-sm-6 ">
+            <h1 id="section_title">News Summary</h1>
+        </div>
+        <div class="col-sm-6  ">
+            <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <div class="box">
+                        <p id="feature">
+                            <i class="icon ion-search"></i><br>
+                            A quick look at the most important events around the world
+                        </p> 
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="box"> 
+                        <p id="feature">
+                            <i class="icon ion-network"></i><br>
+                            A knowledge base for each trend contains the most important triples
+                        </p> 
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="box"> 
+                        <p id="feature">
+                            <i class="icon ion-thumbsup"></i> <i class="icon ion-thumbsdown"></i><br>
+                            Summary and sentiment analysis for specified celebrity statements about a topic
+                        </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class = "container people">
+    <div class="row" style="margin-top: 0;">
+
+        <div class="col-sm-6 trends_box">
+                
+                <form  method = "POST", action ="{% url 'person' %}">
+                    
+                    <!-- <input type="number", value="012"> -->
+                    <input type="text" id="lname" name="query" value="Putin">
+                    <input  type="text" id="lname" name="query" value="Ukrain war">
+                    {% csrf_token %}
+                    <div style="padding: 10px;">
+                        <button value=" " type="submit" name="person_topic">Search</button>
+                    </div>
+                </form>
+        </div>
+        <div class="col-sm-6 ">
+            <h1 id="section_title" style="color: rgb(3, 94, 75); margin-top: 75px;">Opinions<br> Exploration</h1>
+        </div>
+
+    
+    </div>
+</div>
+
+<div class = "container trends">
+    <div class="row">
+        <div class="col-sm-6 trends_box">
+            {% for trend in trends%}
+                
+                <form  method = "POST", action ="{% url 'kg' trend.name %}">
+                    {% csrf_token %}
+                    <!-- <input type="number", value="012"> -->
+                    <input class="trend" type="submit", value= "{{trend.name}}" style="cursor:pointer">
+                </form>
+            {% endfor %}
+            </div>
+    <div class="col-sm-6 ">
+        <h1 id="section_title" style="color: rgb(3, 94, 75);">CURRENT<br> TRENDS</h1>
+    </div>
+    
+</div>
+</div>
+
+
+
+{% endblock content %}

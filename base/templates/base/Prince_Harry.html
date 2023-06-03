@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #222222;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#03DAC6", "font": {"color": "white"}, "id": "Taliban", "label": "Taliban", "shape": "dot", "title": "Taliban"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Afghanistan", "label": "Afghanistan", "shape": "dot", "title": "Afghanistan"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Anas Haqqani", "label": "Anas Haqqani", "shape": "dot", "title": "Anas Haqqani"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Prince Harry", "label": "Prince Harry", "shape": "dot", "title": "Prince Harry"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Prince William", "label": "Prince William", "shape": "dot", "title": "Prince William"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "King Charles", "label": "King Charles", "shape": "dot", "title": "King Charles"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Queen Consort", "label": "Queen Consort", "shape": "dot", "title": "Queen Consort"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "the series", "label": "the series", "shape": "dot", "title": "the series"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Coram James", "label": "Coram James", "shape": "dot", "title": "Coram James"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Mr Coram James", "label": "Mr Coram James", "shape": "dot", "title": "Mr Coram James"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Duchess of Cambridge", "label": "Duchess of Cambridge", "shape": "dot", "title": "Duchess of Cambridge"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Prince of Wales", "label": "Prince of Wales", "shape": "dot", "title": "Prince of Wales"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Charles", "label": "Charles", "shape": "dot", "title": "Charles"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "the Queen", "label": "the Queen", "shape": "dot", "title": "the Queen"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Balmoral", "label": "Balmoral", "shape": "dot", "title": "Balmoral"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "his grandmother", "label": "his grandmother", "shape": "dot", "title": "his grandmother"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "his mother", "label": "his mother", "shape": "dot", "title": "his mother"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Elizabeth II", "label": "Elizabeth II", "shape": "dot", "title": "Elizabeth II"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Queen Elizabeth II", "label": "Queen Elizabeth II", "shape": "dot", "title": "Queen Elizabeth II"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Windsor", "label": "Windsor", "shape": "dot", "title": "Windsor"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Princess Diana", "label": "Princess Diana", "shape": "dot", "title": "Princess Diana"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "William", "label": "William", "shape": "dot", "title": "William"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Kate", "label": "Kate", "shape": "dot", "title": "Kate"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "his family", "label": "his family", "shape": "dot", "title": "his family"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "\u201cPLEASE SPARE US!\u201d", "label": "\u201cPLEASE SPARE US!\u201d", "shape": "dot", "title": "\u201cPLEASE SPARE US!\u201d"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Daily Mail", "label": "Daily Mail", "shape": "dot", "title": "Daily Mail"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Spare", "label": "Spare", "shape": "dot", "title": "Spare"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "his wife", "label": "his wife", "shape": "dot", "title": "his wife"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Real Housewives", "label": "Real Housewives", "shape": "dot", "title": "Real Housewives"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Catherine Ommanney", "label": "Catherine Ommanney", "shape": "dot", "title": "Catherine Ommanney"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Bethenny Frankel", "label": "Bethenny Frankel", "shape": "dot", "title": "Bethenny Frankel"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Caroline Flack", "label": "Caroline Flack", "shape": "dot", "title": "Caroline Flack"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "British", "label": "British", "shape": "dot", "title": "British"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Royal Foundation", "label": "Royal Foundation", "shape": "dot", "title": "Royal Foundation"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "2018", "label": "2018", "shape": "dot", "title": "2018"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "wedding", "label": "wedding", "shape": "dot", "title": "wedding"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Charlotte", "label": "Charlotte", "shape": "dot", "title": "Charlotte"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Camilla, the Duchess of Cornwall", "label": "Camilla, the Duchess of Cornwall", "shape": "dot", "title": "Camilla, the Duchess of Cornwall"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "The Coronation", "label": "The Coronation", "shape": "dot", "title": "The Coronation"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Duke of Sussex", "label": "Duke of Sussex", "shape": "dot", "title": "Duke of Sussex"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Duchess of Sussex", "label": "Duchess of Sussex", "shape": "dot", "title": "Duchess of Sussex"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Harry", "label": "Harry", "shape": "dot", "title": "Harry"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Meghan", "label": "Meghan", "shape": "dot", "title": "Meghan"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Harry and Meghan", "label": "Harry and Meghan", "shape": "dot", "title": "Harry and Meghan"}, {"color": "#03DAC6", "font": {"color": "white"}, "id": "Meghan Markle", "label": "Meghan Markle", "shape": "dot", "title": "Meghan Markle"}]);
+                  edges = new vis.DataSet([{"Value": "country", "arrows": "to", "from": "Taliban", "label": "country", "title": "country", "to": "Afghanistan"}, {"Value": "member of political party", "arrows": "to", "from": "Anas Haqqani", "label": "member of political party", "title": "member of political party", "to": "Taliban"}, {"Value": "sibling", "arrows": "to", "from": "Prince Harry", "label": "sibling", "title": "sibling", "to": "Prince William"}, {"Value": "sibling", "arrows": "to", "from": "Prince William", "label": "sibling", "title": "sibling", "to": "Prince Harry"}, {"Value": "father", "arrows": "to", "from": "Prince Harry", "label": "father", "title": "father", "to": "King Charles"}, {"Value": "child", "arrows": "to", "from": "King Charles", "label": "child", "title": "child", "to": "Prince Harry"}, {"Value": "spouse", "arrows": "to", "from": "Prince Harry", "label": "spouse", "title": "spouse", "to": "Queen Consort"}, {"Value": "spouse", "arrows": "to", "from": "Queen Consort", "label": "spouse", "title": "spouse", "to": "Prince Harry"}, {"Value": "creator", "arrows": "to", "from": "the series", "label": "creator", "title": "creator", "to": "Coram James"}, {"Value": "author", "arrows": "to", "from": "the series", "label": "author", "title": "author", "to": "Coram James"}, {"Value": "creator", "arrows": "to", "from": "the series", "label": "creator", "title": "creator", "to": "Mr Coram James"}, {"Value": "spouse", "arrows": "to", "from": "Duchess of Cambridge", "label": "spouse", "title": "spouse", "to": "Prince of Wales"}, {"Value": "spouse", "arrows": "to", "from": "Duchess of Cambridge", "label": "spouse", "title": "spouse", "to": "Charles"}, {"Value": "father", "arrows": "to", "from": "Duchess of Cambridge", "label": "father", "title": "father", "to": "Prince of Wales"}, {"Value": "place of death", "arrows": "to", "from": "the Queen", "label": "place of death", "title": "place of death", "to": "Balmoral"}, {"Value": "place of death", "arrows": "to", "from": "his grandmother", "label": "place of death", "title": "place of death", "to": "Balmoral"}, {"Value": "place of burial", "arrows": "to", "from": "the Queen", "label": "place of burial", "title": "place of burial", "to": "Balmoral"}, {"Value": "child", "arrows": "to", "from": "his mother", "label": "child", "title": "child", "to": "Elizabeth II"}, {"Value": "place of death", "arrows": "to", "from": "Queen Elizabeth II", "label": "place of death", "title": "place of death", "to": "Windsor"}, {"Value": "mother", "arrows": "to", "from": "his mother", "label": "mother", "title": "mother", "to": "Queen Elizabeth II"}, {"Value": "mother", "arrows": "to", "from": "Prince Harry", "label": "mother", "title": "mother", "to": "Princess Diana"}, {"Value": "child", "arrows": "to", "from": "Princess Diana", "label": "child", "title": "child", "to": "Prince Harry"}, {"Value": "spouse", "arrows": "to", "from": "William", "label": "spouse", "title": "spouse", "to": "Kate"}, {"Value": "spouse", "arrows": "to", "from": "Kate", "label": "spouse", "title": "spouse", "to": "William"}, {"Value": "spouse", "arrows": "to", "from": "Prince William", "label": "spouse", "title": "spouse", "to": "Kate"}, {"Value": "spouse", "arrows": "to", "from": "Kate", "label": "spouse", "title": "spouse", "to": "Prince William"}, {"Value": "has part", "arrows": "to", "from": "his family", "label": "has part", "title": "has part", "to": "Prince Harry"}, {"Value": "child", "arrows": "to", "from": "his mother", "label": "child", "title": "child", "to": "Prince Harry"}, {"Value": "published in", "arrows": "to", "from": "\u201cPLEASE SPARE US!\u201d", "label": "published in", "title": "published in", "to": "Daily Mail"}, {"Value": "publisher", "arrows": "to", "from": "\u201cPLEASE SPARE US!\u201d", "label": "publisher", "title": "publisher", "to": "Daily Mail"}, {"Value": "author", "arrows": "to", "from": "Spare", "label": "author", "title": "author", "to": "Prince Harry"}, {"Value": "spouse", "arrows": "to", "from": "Prince Harry", "label": "spouse", "title": "spouse", "to": "his wife"}, {"Value": "spouse", "arrows": "to", "from": "his wife", "label": "spouse", "title": "spouse", "to": "Prince Harry"}, {"Value": "cast member", "arrows": "to", "from": "Real Housewives", "label": "cast member", "title": "cast member", "to": "Catherine Ommanney"}, {"Value": "main subject", "arrows": "to", "from": "Spare", "label": "main subject", "title": "main subject", "to": "Prince Harry"}, {"Value": "cast member", "arrows": "to", "from": "Real Housewives", "label": "cast member", "title": "cast member", "to": "Bethenny Frankel"}, {"Value": "cast member", "arrows": "to", "from": "Real Housewives", "label": "cast member", "title": "cast member", "to": "Caroline Flack"}, {"Value": "diplomatic relation", "arrows": "to", "from": "Afghanistan", "label": "diplomatic relation", "title": "diplomatic relation", "to": "British"}, {"Value": "diplomatic relation", "arrows": "to", "from": "British", "label": "diplomatic relation", "title": "diplomatic relation", "to": "Afghanistan"}, {"Value": "inception", "arrows": "to", "from": "Royal Foundation", "label": "inception", "title": "inception", "to": "2018"}, {"Value": "participant", "arrows": "to", "from": "wedding", "label": "participant", "title": "participant", "to": "Charlotte"}, {"Value": "spouse", "arrows": "to", "from": "Prince William", "label": "spouse", "title": "spouse", "to": "Camilla, the Duchess of Cornwall"}, {"Value": "spouse", "arrows": "to", "from": "Camilla, the Duchess of Cornwall", "label": "spouse", "title": "spouse", "to": "Prince William"}, {"Value": "spouse", "arrows": "to", "from": "Camilla, the Duchess of Cornwall", "label": "spouse", "title": "spouse", "to": "Prince Harry"}, {"Value": "spouse", "arrows": "to", "from": "Prince Harry", "label": "spouse", "title": "spouse", "to": "Camilla, the Duchess of Cornwall"}, {"Value": "participant", "arrows": "to", "from": "The Coronation", "label": "participant", "title": "participant", "to": "Prince Harry"}, {"Value": "position held", "arrows": "to", "from": "Prince Harry", "label": "position held", "title": "position held", "to": "Duke of Sussex"}, {"Value": "officeholder", "arrows": "to", "from": "Duke of Sussex", "label": "officeholder", "title": "officeholder", "to": "Prince Harry"}, {"Value": "spouse", "arrows": "to", "from": "Prince Harry", "label": "spouse", "title": "spouse", "to": "Duchess of Sussex"}, {"Value": "spouse", "arrows": "to", "from": "Duchess of Sussex", "label": "spouse", "title": "spouse", "to": "Prince Harry"}, {"Value": "spouse", "arrows": "to", "from": "Harry", "label": "spouse", "title": "spouse", "to": "Meghan"}, {"Value": "spouse", "arrows": "to", "from": "Meghan", "label": "spouse", "title": "spouse", "to": "Harry"}, {"Value": "spouse", "arrows": "to", "from": "Harry and Meghan", "label": "spouse", "title": "spouse", "to": "Duchess of Sussex"}, {"Value": "spouse", "arrows": "to", "from": "Duchess of Sussex", "label": "spouse", "title": "spouse", "to": "Harry and Meghan"}, {"Value": "spouse", "arrows": "to", "from": "Prince William", "label": "spouse", "title": "spouse", "to": "Meghan Markle"}, {"Value": "spouse", "arrows": "to", "from": "Meghan Markle", "label": "spouse", "title": "spouse", "to": "Prince William"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 200,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+{% include 'base/details.html' %} </html>

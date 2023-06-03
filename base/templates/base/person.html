@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>news-{{query}}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      </head>
+    <body  style="background-color: rgba(58, 160, 160, 0.099); text-align: center;">
+        <div class="container">
+            <div class="row" style="padding: 5%; text-align: center;">
+                <h1 style="color: rgb(45, 92, 76);">{{query}}</h1>
+                <div class="col">
+                    <h3 style="color: rgb(62, 126, 105);"> Support with {{sentiment}} % </h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6" style="background-color: rgba(191, 221, 221, 0.517);">
+                    <h4 style="color: rgb(145, 145, 222);">Psitive Mentions</h4>
+                    {% for p in pos %}
+                        <h3 style="text-justify: auto;">{{p}}</h3>
+                    {% endfor %}
+                </div>
+                <div class="col-sm-6" style="background-color: rgba(221, 130, 191, 0.454);">
+                    <h4 style="color: rgb(211, 100, 100);">Negative Mentions</h4>
+                    {% for n in neg %}
+                        <h3 style="text-justify: auto;">{{n}}</h3>
+                    {% endfor %}
+                </div>
+                
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,43 @@
+<div class = "container" style="background-color: rgba(152, 201, 185, 0.706); background-size:cover; 
+                max-width:none;
+                max-height: none;
+                margin: 0;">
+<dev class="row" style="text-align: center; max-height:none; padding: 30px;">
+    <h2> {{trend}} Key words</h2>
+    <form method="POST" action="{% url 'search' trend %}">
+            <select multiple="multiple" name="key_word"
+            style="  appearance: none;
+            text-align: center;
+            background-color: rgb(224, 240, 233);
+            border-radius: 5%;
+            width:fit-content;
+            font-family: inherit;
+            font-size: 1.5em;
+            cursor: inherit;
+            line-height: inherit;">
+                {% for key_word in key_words %}
+                    <option title="key_word" value="{{key_word}}">{{key_word}}</option>
+                {% endfor %}
+            </select>
+            {% csrf_token %}
+            <div style="padding: 10px;">
+            <button value="submit" type="submit" name="option">Search</button>
+            </div>
+    </form>
+</dev>
+
+<dev class="row" style="text-align: center ;background-color: rgba(190, 239, 223, 0.706);padding: 30px;">
+<h2> Links to articles </h2>
+    <div>
+        <ul style="list-style-type: none;">
+        {% for link, title in sources %}
+            <li style="padding: 10px;"><a href = {{link}} style="text-decoration: none;
+                                          color: rgb(33, 67, 56);
+                                          font-size: 1.5em;"> {{ title }} </a></li>
+        {% endfor %}
+         </ul>
+    </div>
+</dev>
+
+</div>
+</html>

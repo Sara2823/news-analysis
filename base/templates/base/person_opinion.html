@@ -1,0 +1,21 @@
+<div class = "container" style="background-color: rgba(152, 201, 185, 0.706); background-size:cover; 
+                max-width:none;
+                max-height: none;
+                margin: 0;">
+
+
+<dev class="row" style="text-align: center ;background-color: rgba(190, 239, 223, 0.706);padding: 30px;">
+<h2> Links to articles </h2>
+    <div>
+        <ul style="list-style-type: none;">
+        {% for link, title in sources %}
+            <li style="padding: 10px;"><a href = {{link}} style="text-decoration: none;
+                                          color: rgb(33, 67, 56);
+                                          font-size: 1.5em;"> {{ title }} </a></li>
+        {% endfor %}
+         </ul>
+    </div>
+</dev>
+
+</div>
+</html>
